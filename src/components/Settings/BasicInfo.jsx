@@ -4,7 +4,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { toast } from 'react-toastify';
 
 import { setBasicInfo } from '../../firestore/profileSettings';
-import * as FormValidation from '../../FormValidation';
+import * as FormValidation from '../../formValidation';
 import styles from '../../scss/settings.module.scss';
 import LinearLoader from '../LinearLoader';
 
@@ -95,7 +95,7 @@ const Basicinfo = ({ UserData }) => {
   return (
     <div>
       <div className={styles['basic-head']}>
-        <h4 style={{ fontWeight: '500' }}>Let &apos s Get Started</h4>
+        <h4 style={{ fontWeight: '500' }}>Let&apos;s Get Started</h4>
       </div>
       <form onSubmit={handleFormSubmit}>
         <div className={styles.qns}>

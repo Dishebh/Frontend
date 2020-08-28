@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import React, { useState, useContext, useEffect } from 'react';
 
 import styles from '../scss/header.module.scss';
-import * as FirebaseAuth from './FirebaseAuth';
+import * as FirebaseAuth from './firebaseAuth';
 import DrawerToggleButton from './SideDrawer/DrawerToggleButton';
 import SideDrawer from './SideDrawer/SideDrawer';
 import Spinner from './Spinner';
@@ -148,41 +148,51 @@ export default function Header() {
 
           {profileDD && (
             <div className={styles.dropdown}>
-              <div className={styles['top-row']}>
-                <div className={styles['top-left-col']}>
-                  <img
-                    src={
-                      User !== null && User.profileImageUrl
-                        ? User.profileImageUrl
-                        : '/SVG/user.svg'
-                    }
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = '/SVG/user.svg';
-                    }}
-                    alt="me"
-                  />
-                  {User !== null && <p> {User.name} </p>}
-                </div>
-                <div className={styles['top-right-col']}>
-                  <Link href="/setting">
-                    <img src="/icons/computer.png" alt=" " />
-                  </Link>
-                </div>
-              </div>
-              <div className={styles['bottom-row']}>
+              
+                <div className={styles['bottom-row']}>
                 <Link href="/profile">
-                  <div className={styles['dd-button']}>My Profile</div>
+                    <div
+                      className={styles['dd-button']}
+                      style={{ backgroundColor: '#029843' }}
+                    >
+                      My Profile
+                    </div>
                 </Link>
-                {/*
-                <Link href="/createproject">
-                  <div className={styles['dd-button']}>Create OSP</div>
+                
+                <Link href="/setting">
+                    <div className={styles['dd-button']}
+                      style={{
+                        backgroundColor: '#fff',
+                        border:'1px solid #333',
+                        color: '#000'
+                      }}
+                    >
+                      Settings
+                    </div>
                 </Link>
-                */}
+                
+                {/* <Link href="/createproject">
+                    <div className={styles['dd-button']}
+                      style={{
+                        backgroundColor: '#fff',
+                        border: '1px solid #333',
+                        color: '#000'
+                      }}
+                    >
+                      Create OSP
+                    </div>
+                </Link> */}
+               
                 <button
                   type="button"
                   onClick={handleLogout}
-                  className={styles['dd-button']}>
+                  className={styles['dd-button']}
+                  style={{
+                    backgroundColor: '#fe5e44',
+                    border: 'none',
+                    color: '#fff'
+                  }}
+                >
                   Logout
                 </button>
               </div>
