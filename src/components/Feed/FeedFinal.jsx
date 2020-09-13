@@ -26,7 +26,6 @@ export default function FeedFinal() {
   const [languageList, setLanguageList] = useState([]); // Language List
   const [sortMethod, setSortMethod] = useState(''); // Sort Method
   const [sortOrder, setSortOrder] = useState('asc'); // Sort Order
-  const [savedRepos, setSavedRepos] = useState([]); // Saved Repos List
   const [organisationList, setOrganisationList] = useState([]); // Organisation List
   const [selectedOrganisation, setSelectedOrganisation] = useState('All'); // Selected Organisation
   const [selectedSortMethod, setSelectedSortMethod] = useState('Best Match'); // Selected Sort Method
@@ -135,24 +134,11 @@ export default function FeedFinal() {
     }
   }, [paramsChanged]);
 
-  // Change Saved Repo List depending on method either to remove or to add
-  const changeSavedList = async (nodeId, method) => {
-    if (User) {
-      if (method === 'remove')
-        setSavedRepos([...savedRepos.filter((id) => id !== nodeId)]);
-      else setSavedRepos([...savedRepos, nodeId]);
-
-      // return setSavedRepoList(User.uid, method, nodeId).then(() => {
-      //   return 'complete';
-      // });
-    }
-    return 'complete';
-  };
   // Apply Langauges Filter
   const applyLanguagesFilter = () => {
-    if (selectedLanguagesList.length > 1) {
-      return;
-    }
+    // if (selectedLanguagesList.length > 1) {
+    //   return;
+    // }
     setAppliedLanguagesList(selectedLanguagesList);
   };
   // Clear All Filters
@@ -247,29 +233,61 @@ export default function FeedFinal() {
             className={`${styles['data-list']} ${
               applyLangFilterDisabled ? styles['error-list'] : ''
             } `}>
+            <div key='all'>
+            <input
+                    type="radio"
+                    value='All'
+                    name="language"
+                    defaultChecked
+                    onChange={() => {
+                      // if (
+                      //   selectedLanguagesList.find(
+                      //     (el) => el === e.target.value
+                      //   ) !== undefined
+                      // ) {
+                      //   setSelectedLanguagesList([
+                      //     ...selectedLanguagesList.filter(
+                      //       (el) => el !== e.target.value
+                      //     )
+                      //   ]);
+                      // } else
+                      //   setSelectedLanguagesList([
+                      //     ...selectedLanguagesList,
+                      //     e.target.value
+                      //   ]);
+                      const sel = [];
+                      setSelectedLanguagesList(sel);
+                    setAppliedLanguagesList(sel);
+                    }}
+                  />
+                  All
+                </div>
             {languageList.map((lang) => {
               return (
                 <div key={lang}>
                   <input
-                    type="checkbox"
+                    type="radio"
                     value={lang}
                     name="language"
                     onChange={(e) => {
-                      if (
-                        selectedLanguagesList.find(
-                          (el) => el === e.target.value
-                        ) !== undefined
-                      ) {
-                        setSelectedLanguagesList([
-                          ...selectedLanguagesList.filter(
-                            (el) => el !== e.target.value
-                          )
-                        ]);
-                      } else
-                        setSelectedLanguagesList([
-                          ...selectedLanguagesList,
-                          e.target.value
-                        ]);
+                      // if (
+                      //   selectedLanguagesList.find(
+                      //     (el) => el === e.target.value
+                      //   ) !== undefined
+                      // ) {
+                      //   setSelectedLanguagesList([
+                      //     ...selectedLanguagesList.filter(
+                      //       (el) => el !== e.target.value
+                      //     )
+                      //   ]);
+                      // } else
+                      //   setSelectedLanguagesList([
+                      //     ...selectedLanguagesList,
+                      //     e.target.value
+                      //   ]);
+                      const sel = [e.target.value];
+                      setSelectedLanguagesList(sel);
+                    setAppliedLanguagesList(sel);
                     }}
                   />
                   {'  '} {lang}
@@ -495,18 +513,7 @@ export default function FeedFinal() {
               </p>
             }>
             {repoList.map((repo) => {
-              return (
-                <Card
-                  key={repo.id}
-                  repo={repo}
-                  isSaved={
-                    savedRepos.find((id) => id === repo.node_id) !== undefined
-                  }
-                  changeSaveOption={async (method) => {
-                    return changeSavedList(repo.node_id, method);
-                  }}
-                />
-              );
+              return <Card key={repo.id} repo={repo} isStarredProp={false} />;
             })}
           </InfiniteScroll>
         )}
